@@ -1,0 +1,24 @@
+// -- ------------------------------------
+// -- Perhatian
+// -- Khusus untuk Linux User : 
+// -- hasil dari Copy Path tidak perlu diganti dengan double-backslash \\
+// -- ------------------------------------
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Odoo",
+            "type": "python",
+            "request": "launch",
+            "stopOnEntry": false,
+            "console": "integratedTerminal",
+            "program": "/home/odoo/odoo/odoo-bin",
+            "args": [
+                "--config=/home/odoo/odoo-dev.conf",
+                "--database=te10",
+                "--update=helpdesk_ivan",
+                "--test-enable"
+            ],
+        },
+    ]
+}
