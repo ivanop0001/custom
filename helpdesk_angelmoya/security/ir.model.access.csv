@@ -1,0 +1,7 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+access_helpdesk_ticket,access_helpdesk_ticket,model_helpdesk_ticket,base.group_user,1,0,0,0 
+access_helpdesk_ticket_user,access_helpdesk_ticket_user,model_helpdesk_ticket,helpdesk_user,1,1,1,0 
+access_helpdesk_ticket_manager,access_helpdesk_ticket_manager,model_helpdesk_ticket,helpdesk_manager,1,1,1,1 
+access_helpdesk_ticket_tag_user,access_helpdesk_ticket_tag_user,model_helpdesk_ticket_tag,helpdesk_manager,1,1,1,1
+access_helpdesk_ticket_action_user,access_helpdesk_ticket_action_user,model_helpdesk_ticket_action,helpdesk_manager,1,1,1,1
+access_helpdesk_create_ticket_user,access_helpdesk_create_ticket_user,model_create_ticket,helpdesk_manager,1,1,1,1

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="view_sale_order_helpdesk_form" model="ir.ui.view">
+        <field name="name">view.sale_order_helpdesk.form</field>
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form" />
+        <field name="arch" type="xml">
+            <xpath expr="//notebook/page[@name='other_information']" position="after">
+                <page string="Helpdesk" name="helpdesk">
+                    <button string="Create ticket"
+                        name="create_ticket"
+                        type="object"/>
+                    <field name="ticket_ids"/>                    
+                </page>
+            </xpath> 
+        </field>
+    </record>        
+</odoo>

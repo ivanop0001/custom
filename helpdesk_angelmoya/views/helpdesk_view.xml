@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <record id="view_helpdesk_ticket_tree" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.tree</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <tree string="Ticket">
+                <field name="name"/>
+                <field name="date"/>
+                <field name="state"/>
+            </tree>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_form" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.form</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <form string="Ticket">
+                <header>
+                    <!-- - Asignar, cambia estado a asignado y pone a true el campo asignado, visible sólo con estado = nuevo -->
+                    <button string="Asignar" name="asignar" type="object" states="nuevo"/>
+                    <!-- - En proceso, visible sólo con estado = asignado -->
+                    <button string="En proceso" name="proceso" type="object" states="asignado" />
+                    <!-- - Pendiente, visible sólo con estado = en proceso o asignado -->
+                    <!-- - Finalizar, visible en cualquier estado, menos cancelado y finalizado -->
+                    <button string="Finalizar" name="finalizar" type="object" states="nuevo,asignado,pendiente,proceso" />
+                    <!-- - Cancelar, visible si no está cancelado -->
+                    <field name="state" widget="statusbar" />
+                </header>
+
+                <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                    </div>
+                    <group>
+                        <group>
+                            <field name="partner_id" context="{'default_company_type' : 'person','default_user_id' : user_id}" 
+                                                     domain="[('company_type','=' ,'person')]"/>
+                            <field name="date"/>
+                            <field name="date_limit"/>
+                        </group>
+                        <group>
+                            <field name="user_id" options="{'no_create': True, 'no_open': True}"/>
+                            <field name="assigned"/>
+                            <field name="ticket_qty"/>
+                            <field name="time" widget="float_time"/>
+                        </group>
+                    </group>
+                    <notebook>
+                        <page string="Description">
+                            <field name="description"/>
+                            <group>
+                                <field name="tag_name"/>
+                                <button string="Create tag" name="create_tag" type="object"/>
+                                <button string="Create new tag" name="%(helpdesk_angelmoya.action_new_tag)d" type="action" context="{'default_name': tag_name,}"/>
+                            </group>
+                            <field name="tag_ids" context="{'form_view_ref':'helpdesk_angelmoya.view_helpdesk_ticket_tag_simple_form'}" domain="[('public', '=', True)]"/>
+
+                        </page>
+                        <page string="Actions">
+                            <field name="action_ids" context="{'default_date':date}">
+                                <tree editable="bottom">
+                                    <field name="name"/>
+                                    <field name="date"/>
+                                    <field name="time"/>
+                                </tree>
+                                <form>
+                                    <group name="action">
+                                        <field name="name"/>
+                                        <field name="date"/>
+                                        <field name="time"/>
+                                    </group>
+                                </form>
+                            </field>
+                        </page>
+                        <page string="Quality">
+
+                            <label for="action_corrective"/>
+                            <field name="action_corrective"/>
+                            <group string="Preventive Action">
+                                <field name="action_preventive" nolabel="1"/>
+                            </group>
+                        </page>
+                    </notebook>
+
+
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_search" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.search</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <search string="Ticket">
+                <field name="name"/>
+                <field name="user_id"/>
+                <filter string='Assigned' name="assigned_to" domain="[('user_id', '!=', False)]"/>
+
+                <filter string='No date limit' name="date_limit" domain="[('date_limit', '!=', False)]"/>
+                <filter string="Date limit" name="date_limit" context="{'group_by':'date_limit'}"/>
+                <filter string="Assignet to" name="user_id" context="{'group_by':'user_id'}"/>
+
+            </search>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_pivot" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.pivot</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <pivot string="Ticket">
+                <field name="user_id" type="row"/>
+                <field name="date" interval="month" type="col"/>
+                <field name="time" type="measure" widget="float_time"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_graph" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.graph</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <graph string="Ticket">
+                <field name="user_id"/>
+                <field name="time" type="measure" widget="float_time"/>
+            </graph>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_calendar" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.calendar</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <calendar string="Tickets" date_start="date" color="user_id" hide_time="true" event_limit="5">
+                <field name="user_id" avatar_field="image_128"/>
+                <field name="name"/>
+                <field name="user_id" filters="1" invisible="1"/>
+            </calendar>
+        </field>
+    </record>
+
+    <record id="view_helpdesk_ticket_kanban" model="ir.ui.view">
+        <field name="name">view.helpdesk_ticket.kanban</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="arch" type="xml">
+            <kanban default_group_by="user_id">
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_content oe_kanban_global_click">
+                            <div class="o_kanban_record_title">
+                                <strong>
+                                    <field name="name"/>
+                                </strong>
+                            </div>
+                            <div class="o_kanban_record_subtitle">
+                                <field name="date"/>
+                                <field name="time"/>
+                            </div>
+                            <div class="o_kanban_record_bottom">
+                                <div class="oe_kanban_bottom_right">
+                                    <field name="user_id" widget="many2one_avatar_user"/>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+
+        </field>
+    </record>
+
+    <record id="helpdesk_ticket_action" model="ir.actions.act_window">
+        <field name="name">Tickets</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">helpdesk.ticket</field>
+        <field name="view_mode">tree,kanban,calendar,pivot,graph,form</field>
+        <field name="context">{}</field>
+        <field name="help" type="html">
+            <p class="o_view_nocontent_smiling_face">
+                Create a new ticket
+            </p>
+        </field>
+    </record>
+
+    <menuitem id="helpdesk_ticket_menu_action" name="Tickets" sequence="10" parent="helpdesk_menu_submenu" action="helpdesk_ticket_action"/>
+</odoo>

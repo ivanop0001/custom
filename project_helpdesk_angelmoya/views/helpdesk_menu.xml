@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <menuitem id="helpdesk_menu_root" name="Helpdesk" sequence="10"/>
+    <menuitem id="helpdesk_menu_submenu" name="Helpdesk" sequence="10" parent="helpdesk_menu_root"/>
+
+</odoo>

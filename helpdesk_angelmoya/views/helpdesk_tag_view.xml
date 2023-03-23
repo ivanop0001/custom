@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+        <record id="view_helpdesk_ticket_tag_form" model="ir.ui.view">
+            <field name="name">view.helpdesk_ticket_tag.form</field>
+            <field name="model">helpdesk.ticket.tag</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Tag">
+                    <sheet>
+                        <h1>
+                            <field name="name"/>
+                        </h1>
+                        <group name="public">
+                            <field name="public"/>
+                            <button string="Create Ticket"
+                            name="%(helpdesk_angelmoya.create_ticket_action)d"
+                            type="action"/>
+                        </group>
+                        <field name="ticket_ids"/>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_helpdesk_ticket_tag_simple_form" model="ir.ui.view">
+            <field name="name">view.helpdesk_ticket_tag_simple.form</field>
+            <field name="model">helpdesk.ticket.tag</field>
+            <field eval="1" name="priority"/>
+            <field name="arch" type="xml">
+                <form string="Tag">
+                        <group>
+                            <field name="name"/>
+                        </group>
+                </form>
+            </field>
+        </record>
+
+        <record id="view_helpdesk_ticket_tag_tree" model="ir.ui.view">
+            <field name="name">view.helpdesk_ticket_tag.tree</field>
+            <field name="model">helpdesk.ticket.tag</field>
+            <field name="arch" type="xml">
+                <tree string="Tags">
+                    <field name="name"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="helpdesk_ticket_tag_action" model="ir.actions.act_window">
+            <field name="name">Tags</field>
+            <field name="res_model">helpdesk.ticket.tag</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'tree', 'view_id': ref('view_helpdesk_ticket_tag_tree')}),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_helpdesk_ticket_tag_form')})]"/>
+            <field name="view_mode">tree,form</field>
+            <field name="help" type="html">
+                <p class="oe_view_nocontent_create">
+                    Click to create a new "label".
+                </p>
+            </field>
+        </record>
+
+        <record id="action_new_tag" model="ir.actions.act_window">
+            <field name="name">New Tag</field>
+            <field name="res_model">helpdesk.ticket.tag</field>
+            <field name="view_ids" eval="[(5, 0, 0),
+                (0, 0, {'view_mode': 'form', 'view_id': ref('view_helpdesk_ticket_tag_form')})]"/>
+            <field name="view_mode">form</field>
+            <field name="target">new</field>
+        </record>
+
+
+        <menuitem id="helpdesk_ticket_tag_menu" parent="helpdesk_menu_submenu"
+            action="helpdesk_ticket_tag_action" sequence="40"/>
+</odoo>
