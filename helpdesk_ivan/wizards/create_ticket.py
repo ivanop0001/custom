@@ -15,8 +15,8 @@ class CreateTicket(models.TransientModel):
                 'name': self.name,
                 'tag_ids': [(6, 0, [active_id])]
             })
-            action = self.env.ref('helpdesk_angelmoya.helpdesk_ticket_action').read()[0]
+            action = self.env.ref('helpdesk_ivan.helpdesk_ticket_action').read()[0]
             action['res_id'] = ticket.id
-            action['views'] = [(self.env.ref('helpdesk_angelmoya.view_helpdesk_ticket_form').id, 'form')]
+            action['views'] = [(self.env.ref('helpdesk_ivan.view_helpdesk_ticket_form').id, 'form')]
             return action
         return {'type': 'ir.actions.act_window_close'}

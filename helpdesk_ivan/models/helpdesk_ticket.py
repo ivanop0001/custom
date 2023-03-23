@@ -39,6 +39,11 @@ class HelpdeskTicket(models.Model):
     _name = 'helpdesk.ticket'
     _description = 'Ticket'
 
+    _inherit = ['mail.activity.mixin',
+                'mail.thread.cc',
+                'mail.thread.blacklist']
+
+    _primary_email = 'email_from'
     def _date_default_today(self):
         return fields.Date.today()
 
@@ -56,6 +61,7 @@ class HelpdeskTicket(models.Model):
         translate=True)
     date = fields.Date(
         string='Date')
+    email_from = fields.Char(string='Email from')
     state = fields.Selection(
         [('nuevo', 'Nuevo'),
          ('asignado', 'Asignado'),
@@ -192,7 +198,7 @@ class HelpdeskTicket(models.Model):
         # self.tag_name = False
 
         # pasa por contexto el valor del nombre y la relación con el ticket.
-        action = self.env.ref('helpdesk_angelmoya.action_new_tag').read()[0]
+        action = self.env.ref('helpdesk_ivan.action_new_tag').read()[0]
         action['context'] = {
             'default_name': self.tag_name,
             'default_ticket_ids': [(6, 0, self.ids)]

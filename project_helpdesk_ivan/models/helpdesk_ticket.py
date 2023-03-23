@@ -10,7 +10,7 @@ class HelpdeskTicket(models.Model):
     def default_get(self, fields):
         defaults = super(HelpdeskTicket, self).default_get(fields)
         defaults.update({
-            'project_id': self.env.ref('project_helpdesk_angelmoya.project_helpdkesk').id
+            'project_id': self.env.ref('project_helpdesk_ivan.project_helpdkesk').id
         })
         return defaults
 

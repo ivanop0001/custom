@@ -38,8 +38,7 @@
                     </div>
                     <group>
                         <group>
-                            <field name="partner_id" context="{'default_company_type' : 'person','default_user_id' : user_id}" 
-                                                     domain="[('company_type','=' ,'person')]"/>
+                            <field name="partner_id" context="{'default_company_type' : 'person','default_user_id' : user_id}" domain="[('is_company','=' ,False)]"/>
                             <field name="date"/>
                             <field name="date_limit"/>
                         </group>
@@ -56,9 +55,9 @@
                             <group>
                                 <field name="tag_name"/>
                                 <button string="Create tag" name="create_tag" type="object"/>
-                                <button string="Create new tag" name="%(helpdesk_angelmoya.action_new_tag)d" type="action" context="{'default_name': tag_name,}"/>
+                                <button string="Create new tag" name="%(helpdesk_ivan.action_new_tag)d" type="action" context="{'default_name': tag_name,}"/>
                             </group>
-                            <field name="tag_ids" context="{'form_view_ref':'helpdesk_angelmoya.view_helpdesk_ticket_tag_simple_form'}" domain="[('public', '=', True)]"/>
+                            <field name="tag_ids" context="{'form_view_ref':'helpdesk_ivan.view_helpdesk_ticket_tag_simple_form'}" domain="[('public', '=', True)]"/>
 
                         </page>
                         <page string="Actions">
@@ -89,6 +88,11 @@
 
 
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_follower_ids"/>
+                    <field name="activity_ids"/>
+                    <field name="message_ids" options="{'post_refresh' : 'recipients'}"/>
+                </div>
             </form>
         </field>
     </record>
@@ -150,6 +154,8 @@
         <field name="model">helpdesk.ticket</field>
         <field name="arch" type="xml">
             <kanban default_group_by="user_id">
+                <field name="activity_ids"/>
+                <field name="activity_state "/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_content oe_kanban_global_click">
@@ -162,9 +168,14 @@
                                 <field name="date"/>
                                 <field name="time"/>
                             </div>
-                            <div class="o_kanban_record_bottom">
-                                <div class="oe_kanban_bottom_right">
-                                    <field name="user_id" widget="many2one_avatar_user"/>
+                            <div class="o_kanban_record_left">
+                                <div class="oe_kanban_inline_block">
+                                    <field name="activity_ids" widget="kanban_activity"/>
+                                </div>
+                                <div class="o_kanban_record_bottom">
+                                    <div class="oe_kanban_bottom_right">
+                                        <field name="user_id" widget="many2one_avatar_user"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
