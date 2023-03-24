@@ -12,6 +12,8 @@
     "data": [
         "data/delete_tag_cron.xml",
         "security/helpdesk_security.xml",
+        "report/helpdesk_ticket_report_templates.xml",
+        "report/res_partner_template.xml",
         "security/ir.model.access.csv",
         "views/helpdesk_menu.xml",
         "wizards/create_ticket_view.xml",

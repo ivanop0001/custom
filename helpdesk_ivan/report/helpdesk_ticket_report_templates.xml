@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<odoo>
+    <template id="report_helpdesk_ticket_document">
+        <t t-call="web.external_layout">
+            <div class="page">
+                <div class="oe_structure"/>
+                <h2 class="mt16">
+                    <span t-field="doc.name"/>
+                </h2>
+                <div class="row mt32 mb32" id="informations">
+                    <div class="col-auto col-3 mw-100 mb-2">
+                        <strong>Date:</strong>
+                        <p class="m-0" t-field="doc.date"/>
+                    </div>
+                    <div t-if="doc.partner_id" class="col-auto col-3 mw-100 mb-2">
+                        <strong>Partner:</strong>
+                        <p class="m-0" t-field="doc.partner_id"/>
+                    </div>
+                </div>
+                <table class="table table-sm o_main_table">
+                    <!-- In case we want to repeat the header, remove "display: table-row-group" -->
+                    <thead style="display: table-row-group">
+                        <tr>
+                            <th name="th_description" class="text-left">Description</th>
+                            <th name="th_quantity" class="text-right">Date</th>
+                            <th name="th_priceunit" class="text-right">Time</th>
+                        </tr>
+                    </thead>
+                    <tbody class="sale_tbody">
+                        <t t-foreach="doc.action_ids" t-as="action">
+                            <tr class="bg-200 font-weight-bold">
+                                <td name="td_name">
+                                    <span t-field="action.name"/>
+                                </td>
+                                <td name="td_quantity" class="text-right">
+                                    <span t-field="action.date"/>
+                                </td>
+                                <td name="td_priceunit" class="text-right">
+                                    <span t-field="action.time"/>
+                                </td>
+                            </tr>
+                        </t>
+                    </tbody>
+                </table>
+            </div>
+        </t>
+    </template>
+    <template id="report_helpdesk_ticket">
+        <t t-call="web.html_container">
+            <t t-foreach="docs" t-as="doc">
+                <t t-call="helpdesk_ivan.report_helpdesk_ticket_document"/>
+        </t>
+        </t>
+    </template>
+</odoo>

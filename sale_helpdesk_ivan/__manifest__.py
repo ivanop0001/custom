@@ -13,5 +13,6 @@
         "views/helpdesk_ticket_view.xml",
         "views/product_product_view.xml",
         "views/sale_order_view.xml",
+        "report/sale_report_templates.xml"
     ],
 }

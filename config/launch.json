@@ -16,8 +16,9 @@
             "args": [
                 "--config=/home/odoo/odoo-dev.conf",
                 "--database=te10",
+                "--init= helpdesk_ivan, sale_helpdesk_ivan",
                 "--update=helpdesk_ivan",
-                "--test-enable"
+               // "--test-enable"
             ],
         },
     ]

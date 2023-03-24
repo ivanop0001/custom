@@ -200,4 +200,27 @@
     </record>
 
     <menuitem id="helpdesk_ticket_menu_action" name="Tickets" sequence="10" parent="helpdesk_menu_submenu" action="helpdesk_ticket_action"/>
+
+    <record id="action_report_helpdesk_tciekt" model="ir.actions.report">
+        <field name="name">Print ticket</field>
+        <field name="model">helpdesk.ticket</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">helpdesk_ivan.report_helpdesk_ticket_document</field>
+        <field name="report_file">helpdesk_ivan.report_helpdesk_ticket_document</field>
+        <field name="print_report_name">(object.name)</field>
+        <field name="binding_model_id" ref="model_helpdesk_ticket"/>
+        <field name="binding_type">report</field>
+    </record>
+
+    <record id="action_report_partner_helpdesk" model="ir.actions.report">
+        <field name="name">Helpdesk Partner ID</field>
+        <field name="model">res.partner</field>
+        <field name="report_type">qweb-pdf</field>
+        <field name="report_name">helpdesk_ivan.report_partner_helpdesk</field>
+        <field name="report_file">helpdesk_ivan.report_partner_helpdesk</field>
+        <field name="print_report_name">'ID/%s' % (object.name)</field>
+        <field name="paperformat_id" ref="helpdesk_ivan.paperformat_helpdesk"/>
+        <field name="binding_model_id" ref="base.model_res_partner"/>
+        <field name="binding_type">report</field>
+    </record>
 </odoo>
